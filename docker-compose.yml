@@ -1,26 +1,38 @@
 version: "3.9"
 services:
+  # build and run frontend app -------------------
   ui:
     container_name: "vue-app"
     build: ./spa
+    # image name to push in dockerhub
     image: ahurtadoc/ui:latest
+    # port forwarding with host
     ports:
       - "80:80"
+    # use docker internal network 
     networks:
       - inet
+    # firs wait that backend build and run successfuly
     depends_on:
       - "server"
+  # build and run backend app -------------------
   server:
     container_name: "go-app"
     build: ./server
+    # image name to push in dockerhub
     image: ahurtadoc/server:latest
+    # try to restart always on fails
     restart: "always"
+    # create environment variables
     environment:
       - PORT=4001
+    # port forwarding with host
     ports:
       - "4001:4001"
+    # use docker internal network 
     networks:
       - inet
+# create docker internal network
 networks:
   inet:
     driver: overlay
