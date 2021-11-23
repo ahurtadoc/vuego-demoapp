@@ -3,6 +3,7 @@ services:
   ui:
     container_name: "vue-app"
     build: ./spa
+    image: ahurtadoc/ui:latest
     ports:
       - "80:80"
     networks:
@@ -12,6 +13,7 @@ services:
   server:
     container_name: "go-app"
     build: ./server
+    image: ahurtadoc/server:latest
     restart: "always"
     environment:
       - PORT=4001
