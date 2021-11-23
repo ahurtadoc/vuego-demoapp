@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  ui:
+    container_name: "vue-app"
+    build: ./spa
+    ports:
+      - "80:80"
+    networks:
+      - inet
+    depends_on:
+      - "server"
+  server:
+    container_name: "go-app"
+    build: ./server
+    restart: "always"
+    environment:
+      - PORT=4001
+    ports:
+      - "4001:4001"
+    networks:
+      - inet
+networks:
+  inet:
+    driver: overlay
+    attachable: true
